@@ -1,10 +1,5 @@
 nodejs('node 4.8.6') {
     
-    stage('Checkout..') {
-        echo 'Getting source code...'
-        checkout scm
-    }
-
     stage('Build..') {
         echo 'Building dependencies...'
         sh 'npm install'
