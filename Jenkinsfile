@@ -1,22 +1,29 @@
 pipeline {
     agent any
-
-    nodejs('node 4.8.6') {
     
-        stage('Build..') {
-            echo 'Building dependencies...'
-            sh 'npm install'
-        }
+    tools {
+      nodejs 'node 4.8.6'
+    }
 
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building..'
+                sh 'npm install'
+            }
+        }
         stage('Test') {
-            echo 'Testing...'
-            sh 'npm test'
+            steps {
+                echo 'Testing..'
+                sh 'npm run test'
+            }
         }
-    
-        stage('Package..') {
-            echo 'Package...'
-            sh 'npm run Package'
-            archiveArtifacts artifacts: '**/distribution/*.zip', fingerprint: true
+        stage('Package') {
+            steps {
+                echo 'Packaging....'
+                sh 'npm run Package'
+                archiveArtifacts artifacts: '**/distribution/*.zip', fingerprint: true
+            }
         }
     }
 }
