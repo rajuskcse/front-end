@@ -1,33 +1,28 @@
-pipeline {
-    agent any
-    
-    tools {
-      nodejs 'node 4.8.6'
+node('Pipeline') {
+    stage('Initialize') {
+        echo 'Initializing...'
+        def node = tool name: 'node 4.8.6', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
+        env.PATH = "${node}/bin:${env.PATH}"
     }
 
-    node('node 4.8.6') {
-        stages {
-            stage('Build') {
-                steps {
-                    echo 'Building..'
-                    sh 'npm install'
-                }
-            }
-            stage('Test') {
-                steps {
-                    echo 'Testing..'
-                    sh 'npm install'
-                    sh 'npm run test'
-                }
-            }
-            stage('Package') {
-                steps {
-                    echo 'Packaging....'
-                    sh 'npm install'
-                    sh 'npm run Package'
-                    archiveArtifacts artifacts: '**/distribution/*.zip', fingerprint: true
-                }
-            }
-        }
+    stage('Checkout..') {
+        echo 'Getting source code...'
+        checkout scm
+    }
+
+    stage('Build..') {
+        echo 'Building dependencies...'
+        sh 'npm install'
+    }
+
+    stage('Test') {
+        echo 'Testing...'
+        sh 'npm test'
+    }
+
+    stage('Package..') {
+        echo 'Package...'
+        sh 'npm run Package'
+        archiveArtifacts artifacts: '**/distribution/*.zip', fingerprint: true
     }
 }
