@@ -5,7 +5,7 @@ pipeline {
       nodejs 'node 4.8.6'
     }
 
-    nodejs('node 4.8.6') {
+    node('node 4.8.6') {
         stages {
             stage('Build') {
                 steps {
