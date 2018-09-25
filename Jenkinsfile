@@ -1,10 +1,5 @@
-node('Pipeline') {
-    stage('Initialize') {
-        echo 'Initializing...'
-        def node = tool name: 'node 4.8.6', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
-        env.PATH = "${node}/bin:${env.PATH}"
-    }
-
+nodejs('node 4.8.6') {
+    
     stage('Checkout..') {
         echo 'Getting source code...'
         checkout scm
@@ -19,7 +14,7 @@ node('Pipeline') {
         echo 'Testing...'
         sh 'npm test'
     }
-
+    
     stage('Package..') {
         echo 'Package...'
         sh 'npm run Package'
