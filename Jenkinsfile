@@ -9,6 +9,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
+                sh 'npm config set prefix /usr/local'
                 sh 'npm install'
             }
         }
