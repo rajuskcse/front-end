@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building dependencies...'
-                nodejs(nodeJSInstallationName: 'nodejs', configId: 'node 4.8.6') {
+                nodejs(nodeJSInstallationName: 'node 4.8.6') {
                     sh 'npm config ls'
                 }
             }
